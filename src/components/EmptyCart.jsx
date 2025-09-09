@@ -10,7 +10,7 @@ function EmptyCart() {
       </h2>
       <p className="text-gray-500 mb-6">Add some items before checkout</p>
       <Link href ='/all-products'>
-        <button className="px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">
+        <button className="px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors cursor-pointer">
           Continue Shopping
         </button>
       </Link>

@@ -1,9 +1,10 @@
 "use client"
 import { useEffect, useState } from "react"
-import AlertMessage from "@/components/AlertMessage"
 import Users from "@/data/users"
 import Dropdown from "@/components/Dropdown"
 import locations from "@/data/nepal_locations"
+import { toast } from "react-toastify"
+
 export default function MyProfilePage() {
   const [formData, setFormData] = useState({})
 
@@ -14,7 +15,6 @@ export default function MyProfilePage() {
       setFormData({
         firstName: user.firstName,
         lastName: user.lastName,
-        email: user.email,
         province: user.province || "",
         district: user.district || "",
         city: user.city || "",
@@ -22,25 +22,17 @@ export default function MyProfilePage() {
     }
   }, [])
 
-  const [message, setMessage] = useState("")
-  const [alertTrigger, setAlertTrigger] = useState(0)
-
-  const showMessage = (msg) => {
-    setMessage(msg)
-    setAlertTrigger((prev) => prev + 1)
-  }
-
   const handleSaveChanges = (e) => {
     e.preventDefault()
     const requiredFields = ["province", "district", "city"]
     const missingFields = requiredFields.filter((field) => !formData[field])
 
     if (missingFields.length > 0) {
-      showMessage(`Please fill in: ${missingFields.join(", ")}`)
+      toast.error(`Please fill in: ${missingFields.join(", ")}`)
       return
     }
 
-    showMessage("Saved successfully!")
+    toast.success("Saved successfully!")
   }
 
   const handleCancel = () => {
@@ -49,7 +41,6 @@ export default function MyProfilePage() {
       setFormData({
         firstName: user.firstName,
         lastName: user.lastName,
-        email: user.email,
         province: user.province || "",
         district: user.district || "",
         city: user.city || "",
@@ -72,18 +63,17 @@ export default function MyProfilePage() {
         </h2>
         <form onSubmit={handleSaveChanges} className="space-y-6 mb-3">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {["firstName", "lastName", "email"].map((field) => (
+            {["firstName", "lastName"].map((field) => (
               <div key={field}>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   {field === "firstName"
                     ? "First Name"
-                    : field === "lastName"
-                    ? "Last Name"
-                    : "Email"}
+                    : "Last Name"
+                  }
                 </label>
                 <input
-                  type={field === "email" ? "email" : "text"}
-                  value={formData[field] || ""} 
+                  type={field == "email" ? "email" : "text"}
+                  value={formData[field] || ""}
                   disabled
                   className="w-full px-3 py-2 rounded-md shadow-sm bg-gray-200 cursor-not-allowed"
                 />
@@ -139,8 +129,6 @@ export default function MyProfilePage() {
             </button>
           </div>
         </form>
-
-        <AlertMessage message={message} trigger={alertTrigger} />
       </div>
     </div>
   )

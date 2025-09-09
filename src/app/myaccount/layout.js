@@ -29,7 +29,7 @@ export default function AccountLayout({ children }) {
 
         const response = await fetch("http://127.0.0.1:8000/auth/user/", {
           headers: {
-            Authorization: `Bearer ${token}`,  // <--- send JWT
+            Authorization: `Bearer ${token}`, 
             "Content-Type": "application/json",
           },
         });

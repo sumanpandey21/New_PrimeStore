@@ -1,0 +1,23 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Havit HV-G92 Gamepad",
+      "price": 4999,
+      "in_stock": true,
+      "item_left": 12,
+      "star": 4.5,
+      "total_reviews": 150,
+      "description": "PlayStation 5 controller skin made of high-quality vinyl with air channel adhesive for easy bubble-free installation and mess-free removal. Pressure-sensitive and durable.",
+      "images": {
+        "main": "/images/playstation_main_image.png",
+        "gallery": [
+          "/images/playstation_side_image1.png",
+          "/images/playstation_side_image2.png",
+          "/images/playstation_side_image3.png",
+          "/images/playstation_side_image4.png"
+        ]
+      }
+    }
+  ]
+}

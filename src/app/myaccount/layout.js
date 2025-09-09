@@ -48,53 +48,50 @@ export default function AccountLayout({ children }) {
 
 
   return (
-    <div>
-      <Navbar />
-      <div className="min-h-screen">
-        <div className="bg-white ">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-end">
-            <div className="text-sm">
-              Welcome! <span className="text-red-500 font-medium">{email}</span>
-            </div>
+    <div className="min-h-screen">
+      <div className="bg-white ">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-end">
+          <div className="text-sm">
+            Welcome! <span className="text-red-500 font-medium">{email}</span>
           </div>
-        </div>
-
-        {/* Main layout */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col lg:flex-row gap-8">
-          {/* Sidebar */}
-          <div className="lg:w-1/4 hidden lg:block">
-            <div className="bg-white rounded-lg shadow-sm p-6 px-5">
-              <h2 className="text-xl font-semibold text-gray-900 mb-6">
-                Manage My Account
-              </h2>
-
-              <nav className="space-y-4">
-                <Link href="/myaccount/my-profile" className={linkClass("/myaccount/my_profile")}>
-                  My Profile
-                </Link>
-              </nav>
-
-              <div className="mt-8">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                  My Orders
-                </h3>
-                <nav className="space-y-3">
-                  <Link href="/myaccount/returns" className={linkClass("/myaccount/returns")}>
-                    My Returns
-                  </Link>
-                  <Link href="/myaccount/cancellations" className={linkClass("/myaccount/cancellations")}>
-                    My Cancellations
-                  </Link>
-                </nav>
-              </div>
-            </div>
-          </div>
-
-          {/* Right content */}
-          <div className="lg:w-3/4">{children}</div>
         </div>
       </div>
-      <Footer />
+
+      {/* Main layout */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col lg:flex-row gap-8">
+        {/* Sidebar */}
+        <div className="lg:w-1/4 hidden lg:block">
+          <div className="bg-white rounded-lg shadow-sm p-6 px-5">
+            <h2 className="text-xl font-semibold text-gray-900 mb-6">
+              Manage My Account
+            </h2>
+
+            <nav className="space-y-4">
+              <Link href="/myaccount/my-profile" className={linkClass("/myaccount/my_profile")}>
+                My Profile
+              </Link>
+            </nav>
+
+            <div className="mt-8">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                My Orders
+              </h3>
+              <nav className="space-y-3">
+                <Link href="/myaccount/returns" className={linkClass("/myaccount/returns")}>
+                  My Returns
+                </Link>
+                <Link href="/myaccount/cancellations" className={linkClass("/myaccount/cancellations")}>
+                  My Cancellations
+                </Link>
+              </nav>
+            </div>
+          </div>
+        </div>
+
+        {/* Right content */}
+        <div className="lg:w-3/4">{children}</div>
+      </div>
     </div>
+
   );
 }

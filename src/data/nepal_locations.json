@@ -1,0 +1,266 @@
+{
+  "provinces": [
+    {
+      "id": 1,
+      "name": "Koshi",
+      "districts": [
+        {
+          "name": "Bhojpur",
+          "cities": ["Bhojpur", "Shadananda", "Hatuwagadhi"]
+        },
+        {
+          "name": "Dhankuta",
+          "cities": ["Dhankuta", "Pakhribas", "Chhathar"]
+        },
+        {
+          "name": "Morang",
+          "cities": ["Biratnagar", "Rangeli", "Belbari"]
+        },
+        {
+          "name": "Sankhuwasabha",
+          "cities": ["Khandbari", "Chainpur", "Diding"]
+        },
+        {
+          "name": "Sunsari",
+          "cities": ["Inaruwa", "Itahari", "Dharan"]
+        },
+        {
+          "name": "Taplejung",
+          "cities": ["Taplejung", "Phungling", "Mikwang"]
+        },
+        {
+          "name": "Terhathum",
+          "cities": ["Myanglung", "Chhathar", "Phedap"]
+        },
+        {
+          "name": "Jhapa",
+          "cities": ["Bhadrapur", "Mechinagar", "Birtamod"]
+        },
+        {
+          "name": "Panchthar",
+          "cities": ["Phidim", "Chiyandada", "Falelung"]
+        },
+        {
+          "name": "Sankhuwasabha",
+          "cities": ["Khandbari", "Chainpur", "Diding"]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Madesh",
+      "districts": [
+        {
+          "name": "Saptari",
+          "cities": ["Rajbiraj", "Hanumannagar", "Kalyanpur"]
+        },
+        {
+          "name": "Siraha",
+          "cities": ["Siraha", "Lahan", "Mirchaiya"]
+        },
+        {
+          "name": "Dhanusha",
+          "cities": ["Janakpur", "Bideha", "Kamala"]
+        },
+        {
+          "name": "Mahottari",
+          "cities": ["Jaleshwar", "Bardibas", "Manara"]
+        },
+        {
+          "name": "Sarlahi",
+          "cities": ["Malangwa", "Haripur", "Bagmati"]
+        },
+        {
+          "name": "Rautahat",
+          "cities": ["Gaur", "Paroha", "Ishanath"]
+        },
+        {
+          "name": "Bara",
+          "cities": ["Kalaiya", "Jitpur", "Parwanipur"]
+        },
+        {
+          "name": "Parsa",
+          "cities": ["Birgunj", "Bahadurpur", "Pokhariya"]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Bagmati",
+      "districts": [
+        {
+          "name": "Kathmandu",
+          "cities": ["Kathmandu", "Kirtipur", "Budhanilkantha", "Mahalaxmi"]
+        },
+        {
+          "name": "Lalitpur",
+          "cities": ["Lalitpur", "Godawari", "Mangalbazaar"]
+        },
+        {
+          "name": "Bhaktapur",
+          "cities": ["Bhaktapur", "Madhyapur Thimi", "Changunarayan"]
+        },
+        {
+          "name": "Dhading",
+          "cities": ["Dhading Besi", "Galchhi", "Benighat"]
+        },
+        {
+          "name": "Kavrepalanchok",
+          "cities": ["Dhulikhel", "Banepa", "Panauti"]
+        },
+        {
+          "name": "Rasuwa",
+          "cities": ["Dhunche", "Timure"]
+        },
+        {
+          "name": "Nuwakot",
+          "cities": ["Bidur", "Belkot", "Suryagadhi"]
+        },
+        {
+          "name": "Sindhupalchok",
+          "cities": ["Chautara", "Bharatpur", "Melamchi"]
+        },
+        {
+          "name": "Ramechhap",
+          "cities": ["Manthali", "Kalinchok", "Ramechhap"]
+        },
+        {
+          "name": "Makwanpur",
+          "cities": ["Hetauda", "Thaha", "Bakaiya"]
+        },
+        {
+          "name": "Chitwan",
+          "cities": ["Bharatpur", "Khairahani", "Ratnanagar"]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Gandaki",
+      "districts": [
+        {
+          "name": "Kaski",
+          "cities": ["Pokhara", "Lekhnath", "Hemja"]
+        },
+        {
+          "name": "Nawalparasi East (Nawalpur)",
+          "cities": ["Devchuli", "Dumkibaas", "Gaindakot"]
+        },
+        {
+          "name": "Gorkha",
+          "cities": ["Gorkha Bazaar", "Palungtar", "Barpak"]
+        },
+        {
+          "name": "Lamjung",
+          "cities": ["Besisahar", "Dordi", "Rainas"]
+        },
+        {
+          "name": "Tanahun",
+          "cities": ["Damauli", "Bhanu", "Byas"]
+        },
+        {
+          "name": "Syangja",
+          "cities": ["Putalibazar", "Arjun Chaupari", "Bungdikali"]
+        },
+        {
+          "name": "Parbat",
+          "cities": ["Phalebas", "Jaljala", "Katuwa Chaupari"]
+        },
+        {
+          "name": "Baglung",
+          "cities": ["Baglung", "Galkot", "Dhaulagiri"]
+        },
+        {
+          "name": "Manang",
+          "cities": ["Chame", "Nar", "Manang"]
+        },
+        {
+          "name": "Mustang",
+          "cities": ["Jomsom", "Lo Manthang", "Marpha"]
+        },
+        {
+          "name": "Myagdi",
+          "cities": ["Beni", "Raghuganga", "Mangale"]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Lumbini",
+      "districts": [
+        {
+          "name": "Rupandehi",
+          "cities": ["Butwal", "Bhairahawa", "Lumbini"]
+        },
+        {
+          "name": "Kapilvastu",
+          "cities": ["Taulihawa", "Banganga", "Kapilvastu"]
+        },
+        {
+          "name": "Nawalparasi West (Parasi)",
+          "cities": ["Parasi", "Bardaghat", "Sunwal"]
+        },
+        {
+          "name": "Palpa",
+          "cities": ["Tansen", "Rampur", "Mathillo Bazar"]
+        },
+        {
+          "name": "Arghakhanchi",
+          "cities": ["Sandhikharka", "Bhumikasthan", "Arghakhanchi"]
+        },
+        {
+          "name": "Gulmi",
+          "cities": ["Tamghas", "Resunga", "Isma"]
+        },
+        {
+          "name": "Pyuthan",
+          "cities": ["Pyuthan Bazaar", "Gaidakot", "Gaumukhi"]
+        },
+        {
+          "name": "Dang",
+          "cities": ["Ghorahi", "Tulsipur", "Lamahi"]
+        },
+        {
+          "name": "Rolpa",
+          "cities": ["Liwang", "Rohini", "Rolpa"]
+        },
+        {
+          "name": "Rukum West",
+          "cities": ["Musikot", "Sani Bheri", "Chaurjahari"]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Karnali",
+      "districts": [
+        {
+          "id": 1,
+          "name": "Jumla",
+          "cities": ["Jumla", "Chandannath", "Sinja"]
+        },
+        {
+          "id": 2,
+          "name": "Dolpa",
+          "cities": ["Dolkha", "Thuli Bheri", "Tarakot"]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Sudurpashchim",
+      "districts": [
+        {
+          "id": 1,
+          "name": "Kanchanpur",
+          "cities": ["Dhangadhi", "Krishna Nagar", "Mahendranagar"]
+        },
+        {
+          "id": 2,
+          "name": "Dadeldhura",
+          "cities": ["Amargadhi", "Gokuleshwar", "Ajayameru"]
+        }
+      ]
+    }
+  ]
+}

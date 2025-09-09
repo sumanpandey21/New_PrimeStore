@@ -8,7 +8,6 @@ import Navbar from '@/components/Navbar'
 const page = () => {
     return (
         <div>
-            <Navbar />
             <div className='flex flex-col justify-start lg:ml-15.5 lg:mr-18.5 lg:py-10 py-6 mx-5 lg:gap-10 gap-5  '>
                 <div className='flex flex-col justify-start items-start w-full h-full gap-0.5 lg:gap-3 sm:gap-1 md:gap-1.5'>
                     <UpperText text="Our Products" />

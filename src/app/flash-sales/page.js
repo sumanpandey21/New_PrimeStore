@@ -1,5 +1,4 @@
 "use client";
-import Navbar from '@/components/Navbar'
 import ProductView from '@/components/ProductView'
 import React from 'react'
 import { productMockData } from '@/mockdata/mockdata'
@@ -44,7 +43,6 @@ const page = () => {
     }, []);
     return (
         <div>
-            <Navbar />
             <div className='flex flex-col justify-start lg:ml-15.5 lg:mr-18.5 lg:py-10 py-6 mx-5 lg:gap-10 gap-5'>
                 <div className='flex flex-col justify-start items-start w-full h-full'>
                     <UpperText text="Today's" />

@@ -1,0 +1,13 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Ram",
+      "lastName": "Paudel",
+      "email": "rampaudel12@gmail.com",
+      "province" : "Bagmati",
+      "district" : "Chitwan",
+      "city" : "Bharatpur"
+    }
+  ]
+}

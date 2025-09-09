@@ -13,7 +13,6 @@ import Footer from "@/components/Footer";
 const Page = () => {
   return (
     <div>
-      <Navbar />
       <div className="flex">
         <div className="w-1/5 border-r border-gray-300 hidden lg:block">
           <Categories />
@@ -28,7 +27,6 @@ const Page = () => {
       <MainImage /> 
       <ExploreProduct />
       <FooterLogos />
-      <Footer />
     </div>
   );
 };

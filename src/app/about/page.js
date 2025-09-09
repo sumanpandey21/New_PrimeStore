@@ -9,7 +9,6 @@ import Footer from "@/components/Footer"
 const AboutUsPage = () => {
   return (
     <div className="min-h-screen">
-      <Navbar />
       {/* Our Story Section */}
       <div className="lg:ml-15.5 lg:mr-18.5 lg:py-10 py-6 mx-5 lg:gap-15 gap-9 ">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -76,7 +75,6 @@ const AboutUsPage = () => {
       <div className="lg:py-8">
         <FooterLogos />
       </div>
-      <Footer />
     </div>
   )
 }

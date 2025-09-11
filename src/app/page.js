@@ -1,5 +1,4 @@
 import React from "react";
-import Navbar from "@/components/Navbar";
 import Categories from "@/components/Categories";
 import MainBanner from "@/components/MainBanner";
 import FlashSalesSlider from "@/components/FlashSalesSlider";
@@ -8,7 +7,7 @@ import BestSellingSlider from "@/components/BestSellingSlider";
 import MainImage from "@/components/MainImage";
 import ExploreProduct from "@/components/ExploreProduct";
 import FooterLogos from "@/components/FooterLogos";
-import Footer from "@/components/Footer";
+import categoriesMockData from "@/mockdata/mockdata";
 
 const Page = () => {
   return (

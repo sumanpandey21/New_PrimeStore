@@ -1,13 +1,15 @@
 import React from 'react';
 import Link from "next/link";
 import Categories from './Categories';
+import ServicePromotion from './ServicePromotionFilter';
+import PriceFilter from './PriceFilter';
+import RatingFilter from './RatingFilter';
 import { usePathname } from "next/navigation";
 import useAuthStore from "@/store/authStore";
 import Image from 'next/image';
 import { Menu } from 'lucide-react';
 
 const MobileMenu = ({ isOpen, onClose }) => {
-
     const { authToken } = useAuthStore();
     const pathname = usePathname();
 
@@ -30,16 +32,16 @@ const MobileMenu = ({ isOpen, onClose }) => {
                 className={`fixed top-0 left-0 bg-white z-50 flex flex-col w-64 sm:w-80 h-full shadow-lg transform transition-transform duration-300 overflow-y-auto ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
             >
                 {/* Header with Logo and Menu Icon */}
-                <div className="flex items-center p-3.5 border-b border-gray-200">
+                <div className="flex items-center p-3.5 border-b border-gray-200 sticky top-0 bg-white z-10">
                     <button
-                        onClick={onClose} // This button now closes the menu
-                        className="p-2 rounded-full hover:bg-gray-100 mt-1"
+                        onClick={onClose}
+                        className="p-2 rounded-full hover:bg-gray-100 mt-1 transition-colors duration-200"
                     >
                         <Menu />
                     </button>
                     <Link
                         href="/"
-                        className="flex items-center ml-[-10] "
+                        className="flex items-center ml-[-10]"
                         onClick={onClose}
                     >
                         <Image
@@ -69,17 +71,22 @@ const MobileMenu = ({ isOpen, onClose }) => {
                     })}
 
                     {!authToken && (
-                        <Link href="/login" onClick={onClose} className="w-full rounded-md px-3 py-2 transition-colors duration-200 hover:bg-gray-100 text-gray-700">
+                        <Link 
+                            href="/login" 
+                            onClick={onClose} 
+                            className="w-full rounded-md px-3 py-2 transition-colors duration-200 hover:bg-gray-100 text-gray-700"
+                        >
                             Sign In
                         </Link>
                     )}
                 </div>
 
-                {/* Categories */}
-                <div className="flex-1 p-4">
-                    <div className='font-semibold mb-2 text-gray-800'>Categories</div>
+                {/* Categories - Always visible */}
+                <div className="p-4 border-b border-gray-200">
+                    <div className='font-semibold mb-3 text-gray-800'>Categories</div>
                     <Categories />
                 </div>
+
             </div>
         </div>
     );

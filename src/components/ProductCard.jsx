@@ -22,7 +22,7 @@ const ProductCard = ({
         replacement: "-",
         lower: true,
       })}?q=${id}`}
-    >
+    > 
       <div className="rounded-md relative hover:cursor-pointer hover:shadow-sm lg:hover:shadow-lg ">
         {discount && (
           <div className="absolute top-1 left-1 z-10 bg-red-500 lg:w-15 lg:h-7.5 w-10 h-5 rounded-md flex justify-center items-center text-white text-xs sm:text-sm md:text-base">

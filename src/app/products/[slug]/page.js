@@ -2,7 +2,7 @@
 import React, { useState, useRef } from 'react';
 import { Heart, Truck, RefreshCcw } from 'lucide-react';
 import { useSearchParams } from "next/navigation";
-import { productMockData } from "@/mockdata/mockdata";
+import { productMockData, categoriesMockData } from "@/mockdata/mockdata";
 import { toast } from "react-toastify"
 import { useCart } from "@/store/cartStore";
 
@@ -11,13 +11,21 @@ const ProductDetailsPage = () => {
 
   const searchParams = useSearchParams();
   const id = searchParams.get("q");
-  const product = productMockData.find(p => p.id === parseInt(id));
+
+  // flatten category products
+  const allCategoryProducts = categoriesMockData.flatMap((cat) => cat.products);
+
+  // merge with productMockData
+  const allProducts = [...productMockData, ...allCategoryProducts];
+
+  // find the product
+  const product = allProducts.find((p) => p.id === parseInt(id));
 
   const { cartItems, addItem } = useCart();
 
   if (!product) return <div>Product not found</div>;
 
-  const [selectedImage, setSelectedImage] = useState(product.image);
+  const [selectedImage, setSelectedImage] = useState(product.images.main);
   const [backgroundPosition, setBackgroundPosition] = useState("0% 0%");
   const [isZoomed, setIsZoomed] = useState(false);
   const imgRef = useRef(null);
@@ -47,14 +55,14 @@ const ProductDetailsPage = () => {
       addItem({
         id: product.id,
         name: product.name,
-        price: discountedPrice,
+        price: discountedPrice ? discountedPrice : product.price,
         quantity: 1,
-        image: product.image,
+        image: product.images.main,
         item_left: product.item_left,
       });
 
       toast.success("Product added to cart successfully!");
-    }
+    } 
     else toast.info("Already in cart")
   };
 
@@ -118,7 +126,7 @@ const ProductDetailsPage = () => {
 
             {/* Price */}
             <div className="text-2xl font-semibold text-gray-900">
-              Rs. {discountedPrice.toLocaleString()}
+              Rs. {discountedPrice > 0 ? discountedPrice.toLocaleString() : product.price}
             </div>
           </div>
 
@@ -148,8 +156,8 @@ const ProductDetailsPage = () => {
             <div className="flex items-center gap-3">
               <Truck className="w-5 h-5 text-gray-600" />
               <div>
-                <div className="font-medium">Free Delivery</div>
-                <div className="text-sm text-gray-500">Enter your postal code for Delivery Availability</div>
+                <div className="font-medium">Free Delivery inside Chitwan</div>
+                <div className="text-sm text-gray-500">Checkout dropdown box for Delivery Availability</div>
               </div>
             </div>
 

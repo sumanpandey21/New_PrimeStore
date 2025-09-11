@@ -21,7 +21,6 @@ const CheckoutPage = () => {
 
   const [paymentMethod, setPaymentMethod] = useState("cash")
   const [subtotal, setSubtotal] = useState(0)
-  const deliveryCharge = 0
 
   useEffect(() => {
     const total = cartItems.reduce(
@@ -42,7 +41,7 @@ const CheckoutPage = () => {
   const validateFields = () => {
 
     const fullNameRegex = /^[A-Za-z]+(?:[ .'-][A-Za-z]+)+$/
-    const phoneRegex = /^(97|98)\d{8}$/ 
+    const phoneRegex = /^(97|98)\d{8}$/
     const emailRegex = /^[A-Za-z][^\s@]*@[^\s@]+\.[^\s@]+$/
 
     if (!phoneRegex.test(billingDetails.phoneNumber)) {
@@ -83,7 +82,7 @@ const CheckoutPage = () => {
 
     if (!validateFields()) return
 
-    toast.success("Order placed successfully!") 
+    toast.success("Order placed successfully!")
 
     setBillingDetails({
       fullName: "",
@@ -105,6 +104,23 @@ const CheckoutPage = () => {
   const cities = billingDetails.district
     ? districts.find((d) => d.name === billingDetails.district)?.cities || []
     : []
+
+  const [deliveryCharge, setDeliveryCharge] = useState("")
+  const calculateDeliveryCharge = () => {
+    if (billingDetails.province === "Bagmati") setDeliveryCharge(75)
+    if (billingDetails.district === "Chitwan") setDeliveryCharge(0)
+    if (billingDetails.province === "Koshi") setDeliveryCharge(125)
+    if (billingDetails.province === "Madhesh") setDeliveryCharge(100)
+    if (billingDetails.province === "Gandaki") setDeliveryCharge(85)
+    if (billingDetails.province === "Lumbini") setDeliveryCharge(90)
+    if (billingDetails.province === "Karnali") setDeliveryCharge(150)
+    if (billingDetails.province === "Sudurpashchim") setDeliveryCharge(200)
+
+  }
+
+  useEffect(() => {
+    calculateDeliveryCharge()
+  }, [billingDetails])
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
@@ -256,7 +272,7 @@ const CheckoutPage = () => {
                   </div>
                   <div className="flex justify-between items-center pb-2 border-b">
                     <span className="text-gray-600">Delivery Charge:</span>
-                    <span className="font-medium text-green-600">Free</span>
+                    <span className={`font-bold ${deliveryCharge == 0 ? "text-green-600" : "text-black"} `}>{deliveryCharge}</span>
                   </div>
                   <div className="flex justify-between items-center text-lg font-semibold">
                     <span>Total:</span>

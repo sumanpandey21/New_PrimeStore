@@ -8,7 +8,7 @@ const ProductView = ({products}) => {
             <ProductCard 
                 key={product.id}
                 id={product.id}
-                image={product.image}
+                image={product.images.main}
                 title={product.name}
                 price={product.price}
                 rating={product.rating}

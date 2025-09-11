@@ -66,7 +66,6 @@ const page = () => {
 
     return (
         <div>
-            <Navbar q={searchQuery} />
             <h1>Products for {searchQuery}</h1>
             {products?.length ? (
                 <ul>

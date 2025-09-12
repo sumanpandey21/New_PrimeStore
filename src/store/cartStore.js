@@ -5,7 +5,7 @@ export const useCart = create((set) => ({
   cartItems: [],
   setCartItems: (items) => set({ cartItems: items }),
 
-  addItem: (item) =>
+  addCartItem: (item) =>
     set((state) => {
       const existing = state.cartItems.find((i) => i.id === item.id);
       if (existing) {
@@ -25,7 +25,7 @@ export const useCart = create((set) => ({
       ),
     })),
 
-  removeItem: (id) =>
+  removeCartItem: (id) =>
     set((state) => ({
       cartItems: state.cartItems.filter((item) => item.id !== id),
     })),

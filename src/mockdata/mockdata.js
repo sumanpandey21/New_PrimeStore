@@ -21,7 +21,7 @@ const categoriesMockData = [
                 name: "Floral Maxi Dress",
                 price: 4999,
                 item_left: 30,
-                rating: 4.5,
+                rating: 3,
                 totalRatings: 120,
                 in_stock: true,
                 description: "A lightweight, floral-patterned maxi dress perfect for summer outings or casual events, offering comfort and elegance.",

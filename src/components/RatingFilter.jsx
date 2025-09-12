@@ -6,6 +6,7 @@ const RatingFilter = () => {
     { id: 4, stars: 4, checked: false },
     { id: 3, stars: 3, checked: false },
     { id: 2, stars: 2, checked: false },
+    { id: 1, stars: 1, checked: false },
   ]);
 
   const handleRatingChange = (id) => {

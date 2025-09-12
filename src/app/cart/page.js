@@ -6,9 +6,9 @@ import EmptyCart from "@/components/EmptyCart";
 import { useCart } from "@/store/cartStore";
 
 const CartPage = () => {
-  const { cartItems, updateQuantity, removeItem } = useCart();
+  const { cartItems, updateQuantity, removeCartItem } = useCart();
   const [subtotal, setSubtotal] = useState(0);
-  
+
   useEffect(() => {
     const total = cartItems.reduce(
       (sum, item) => sum + item.price * item.quantity,
@@ -22,7 +22,6 @@ const CartPage = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        {/* Breadcrumbs */}
         <nav className="mb-8 text-sm text-gray-600">
           <Link href={"/"}>
             <span className="hover:text-gray-800 cursor-pointer">Home</span>
@@ -57,7 +56,7 @@ const CartPage = () => {
                         className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg bg-gray-100"
                       />
                       <button
-                        onClick={() => removeItem(item.id)}
+                        onClick={() => removeCartItem(item.id)}
                         className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors"
                       >
                         <Trash2 className="w-3 h-3 cursor-pointer" />
@@ -150,7 +149,7 @@ const CartPage = () => {
         )}
 
         {/* Empty Cart */}
-        {cartItems.length === 0 && <EmptyCart />}
+        {cartItems.length === 0 && <EmptyCart title={"Your cart is empty"} message={"Add some items before checkout"} />}
       </div>
     </div>
   );

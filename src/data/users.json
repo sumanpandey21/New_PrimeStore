@@ -2,8 +2,8 @@
   "users": [
     {
       "id": 1,
-      "firstName": "Ram",
-      "lastName": "Paudel",
+      "firstName": "",
+      "lastName": "",
       "email": "rampaudel12@gmail.com",
       "province" : "Bagmati",
       "district" : "Chitwan",

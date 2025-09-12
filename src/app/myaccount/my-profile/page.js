@@ -11,10 +11,9 @@ export default function MyProfilePage() {
   useEffect(() => {
     if (Users.users.length > 0) {
       const user = Users.users[0]
-      console.log(user)
       setFormData({
-        firstName: user.firstName,
-        lastName: user.lastName,
+        firstName: user.firstName || "",
+        lastName: user.lastName || "",
         province: user.province || "",
         district: user.district || "",
         city: user.city || "",
@@ -24,23 +23,40 @@ export default function MyProfilePage() {
 
   const handleSaveChanges = (e) => {
     e.preventDefault()
-    const requiredFields = ["province", "district", "city"]
+    const requiredFields = ["firstName", "lastName", "province", "district", "city"]
     const missingFields = requiredFields.filter((field) => !formData[field])
 
     if (missingFields.length > 0) {
       toast.error(`Please fill in: ${missingFields.join(", ")}`)
       return
     }
+    const nameRegex = /^[A-Za-z\s]{2,30}$/;
+    if (!nameRegex.test(formData.firstName)) {
+      toast.error("First name must be 2–30 letters only");
+      return;
+    }
+    if (!nameRegex.test(formData.lastName)) {
+      toast.error("Last name must be 2–30 letters only");
+      return;
+    }
 
     toast.success("Saved successfully!")
+    setFormData({
+      firstName: "",
+      lastName: "",
+      province: "",
+      district: "",
+      city: "",
+    })
+
   }
 
   const handleCancel = () => {
     if (Users.users.length > 0) {
       const user = Users.users[0]
       setFormData({
-        firstName: user.firstName,
-        lastName: user.lastName,
+        firstName: "",
+        lastName: "",
         province: user.province || "",
         district: user.district || "",
         city: user.city || "",
@@ -66,16 +82,15 @@ export default function MyProfilePage() {
             {["firstName", "lastName"].map((field) => (
               <div key={field}>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {field === "firstName"
-                    ? "First Name"
-                    : "Last Name"
-                  }
+                  {field === "firstName" ? "First Name" : "Last Name"}
                 </label>
                 <input
-                  type={field == "email" ? "email" : "text"}
+                  type="text"
                   value={formData[field] || ""}
-                  disabled
-                  className="w-full px-3 py-2 rounded-md shadow-sm bg-gray-200 cursor-not-allowed"
+                  onChange={(e) =>
+                    setFormData({ ...formData, [field]: e.target.value })
+                  }
+                  className="w-full px-3 py-2 rounded-md shadow-sm bg-gray-50 outline text-black focus:outline-none focus:ring-2 focus:ring-red-400"
                 />
               </div>
             ))}

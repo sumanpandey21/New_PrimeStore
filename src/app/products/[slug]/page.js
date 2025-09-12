@@ -5,23 +5,21 @@ import { useSearchParams } from "next/navigation";
 import { productMockData, categoriesMockData } from "@/mockdata/mockdata";
 import { toast } from "react-toastify"
 import { useCart } from "@/store/cartStore";
-
+import { useWishlist } from '@/store/wishlistStore';
 
 const ProductDetailsPage = () => {
 
   const searchParams = useSearchParams();
   const id = searchParams.get("q");
 
-  // flatten category products
   const allCategoryProducts = categoriesMockData.flatMap((cat) => cat.products);
 
-  // merge with productMockData
   const allProducts = [...productMockData, ...allCategoryProducts];
 
-  // find the product
   const product = allProducts.find((p) => p.id === parseInt(id));
 
-  const { cartItems, addItem } = useCart();
+  const { cartItems, addCartItem } = useCart();
+  const { wishlistItems, addWishlistItem } = useWishlist();
 
   if (!product) return <div>Product not found</div>;
 
@@ -50,9 +48,12 @@ const ProductDetailsPage = () => {
   // check if product already in cart
   const isInCart = cartItems.some((item) => item.id === product.id);
 
+  // check if product already in wishlist
+  const isInWishlist = wishlistItems.some((item) => item.id === product.id);
+
   const handleAddToCart = () => {
     if (!isInCart) {
-      addItem({
+      addCartItem({
         id: product.id,
         name: product.name,
         price: discountedPrice ? discountedPrice : product.price,
@@ -62,10 +63,31 @@ const ProductDetailsPage = () => {
       });
 
       toast.success("Product added to cart successfully!");
-    } 
+    }
     else toast.info("Already in cart")
   };
+  // const { wishlistItems, addWhichlistItem, removeWishlistItem } = useWishlist();
+  console.log(product)
 
+  const handleAddToWishList = () => {
+    if (!isInWishlist) {
+      addWishlistItem({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        discount : product.discount,
+        image: product.images.main,
+        item_left: product.item_left,
+        in_stock: product.in_stock,
+        rating : product.rating,
+        totalRatings : product.totalRatings 
+      });
+
+      toast.success("Product added to wishlist successfully!");
+    } else {
+      toast.info("Already in wishlist");
+    }
+  };
 
   return (
     <div className="max-w-7xl mx-auto p-4 lg:p-8">
@@ -145,10 +167,16 @@ const ProductDetailsPage = () => {
             >
               Add to cart
             </button>
-
-            <button className="p-3 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors">
-              <Heart className="w-5 h-5" />
+            <button
+              className="p-3 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+              onClick={handleAddToWishList}
+            >
+              <Heart
+                className={`w-5 h-5 cursor-pointer ${isInWishlist ? "text-red-500 fill-red-500" : "text-gray-500"
+                  }`}
+              />
             </button>
+
           </div>
 
           {/* Delivery Info */}
@@ -158,16 +186,6 @@ const ProductDetailsPage = () => {
               <div>
                 <div className="font-medium">Free Delivery inside Chitwan</div>
                 <div className="text-sm text-gray-500">Checkout dropdown box for Delivery Availability</div>
-              </div>
-            </div>
-
-            <hr className="border-gray-200" />
-
-            <div className="flex items-center gap-3">
-              <RefreshCcw className="w-5 h-5 text-gray-600" />
-              <div>
-                <div className="font-medium">Return Delivery</div>
-                <div className="text-sm text-gray-500">Free 30 Days Delivery Returns. Details</div>
               </div>
             </div>
           </div>

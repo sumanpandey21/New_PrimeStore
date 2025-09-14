@@ -32,6 +32,7 @@ const PriceFilter = () => {
               value={minPrice}
               onChange={handleMinChange}
               placeholder="Min"
+              min={1}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200 text-sm"
             />
           </div>
@@ -42,6 +43,7 @@ const PriceFilter = () => {
               value={maxPrice}
               onChange={handleMaxChange}
               placeholder="Max"
+              min={1}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200 text-sm"
             />
           </div>

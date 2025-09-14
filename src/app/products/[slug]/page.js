@@ -66,8 +66,7 @@ const ProductDetailsPage = () => {
     }
     else toast.info("Already in cart")
   };
-  // const { wishlistItems, addWhichlistItem, removeWishlistItem } = useWishlist();
-  console.log(product)
+  
 
   const handleAddToWishList = () => {
     if (!isInWishlist) {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react"
 
 const RatingFilter = () => {
   const [ratings, setRatings] = useState([
@@ -7,20 +7,20 @@ const RatingFilter = () => {
     { id: 3, stars: 3, checked: false },
     { id: 2, stars: 2, checked: false },
     { id: 1, stars: 1, checked: false },
-  ]);
+  ])
 
   const handleRatingChange = (id) => {
     const updatedRatings = ratings.map((rating) =>
       rating.id === id ? { ...rating, checked: !rating.checked } : rating
-    );
-    setRatings(updatedRatings);
-  };
+    )
+    setRatings(updatedRatings)
+  }
 
   const handleClearAll = () => {
-    setRatings(ratings.map(rating => ({ ...rating, checked: false })));
-  };
+    setRatings(ratings.map((rating) => ({ ...rating, checked: false })))
+  }
 
-  const hasSelectedRatings = ratings.some(rating => rating.checked);
+  const hasSelectedRatings = ratings.some((rating) => rating.checked)
 
   return (
     <div className="border-b border-gray-200 pb-6">
@@ -35,7 +35,7 @@ const RatingFilter = () => {
           </button>
         )}
       </div>
-      
+
       <div className="space-y-3">
         {ratings.map((rating) => (
           <label
@@ -44,33 +44,45 @@ const RatingFilter = () => {
           >
             <div className="relative">
               <input
-                type="checkbox"
+                type="radio"
+                name="star"
                 checked={rating.checked}
                 onChange={() => handleRatingChange(rating.id)}
                 className="sr-only"
               />
-              <div className={`
+              <div
+                className={`
                 w-5 h-5 rounded border-2 flex items-center justify-center transition-all duration-200
-                ${rating.checked 
-                  ? 'bg-yellow-500 border-yellow-500' 
-                  : 'border-gray-300 group-hover:border-yellow-400'
+                ${
+                  rating.checked
+                    ? "bg-yellow-500 border-yellow-500"
+                    : "border-gray-300 group-hover:border-yellow-400"
                 }
-              `}>
+              `}
+              >
                 {rating.checked && (
-                  <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  <svg
+                    className="w-3 h-3 text-white"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                 )}
               </div>
             </div>
-            
+
             <div className="ml-3 flex items-center">
               <div className="flex items-center space-x-1">
                 {Array.from({ length: 5 }, (_, i) => (
                   <svg
                     key={i}
                     className={`w-4 h-4 transition-colors duration-150 ${
-                      i < rating.stars ? 'text-yellow-400' : 'text-gray-300'
+                      i < rating.stars ? "text-yellow-400" : "text-gray-300"
                     }`}
                     fill="currentColor"
                     viewBox="0 0 20 20"
@@ -79,9 +91,13 @@ const RatingFilter = () => {
                   </svg>
                 ))}
               </div>
-              <span className={`ml-2 text-sm transition-colors duration-150 ${
-                rating.checked ? 'text-yellow-600 font-medium' : 'text-gray-600 group-hover:text-gray-900'
-              }`}>
+              <span
+                className={`ml-2 text-sm transition-colors duration-150 ${
+                  rating.checked
+                    ? "text-yellow-600 font-medium"
+                    : "text-gray-600 group-hover:text-gray-900"
+                }`}
+              >
                 And Up
               </span>
             </div>
@@ -89,7 +105,7 @@ const RatingFilter = () => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default RatingFilter;
+export default RatingFilter

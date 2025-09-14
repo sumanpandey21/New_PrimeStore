@@ -116,7 +116,7 @@ const CartPage = () => {
 
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-5">
-                <Link href={"/"}>
+                <Link href={"/all-products"}>
                   <button className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-200 transition-colors active:bg-gray-300 cursor-pointer">
                     Return To Shop
                   </button>

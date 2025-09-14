@@ -6,17 +6,19 @@ import locations from "@/data/nepal_locations"
 import EmptyCart from "@/components/EmptyCart"
 import Dropdown from "@/components/Dropdown"
 import { toast } from "react-toastify"
+import useOrderStore from "@/store/orderStore"
 
 const CheckoutPage = () => {
-  const { cartItems } = useCart()
+  const { cartItems, removeCartItem } = useCart()
+  const { addOrder } = useOrderStore()
 
   const [billingDetails, setBillingDetails] = useState({
-    fullName: "",
-    province: "",
-    district: "",
-    townCity: "",
-    emailAddress: "",
-    phoneNumber: "",
+    fullName: "Suman Pandey",
+    province: "Bagmati",
+    district: "Chitwan",
+    townCity: "Bharatpur",
+    emailAddress: "suman@gmail.com",
+    phoneNumber: "9840631397",
   })
 
   const [paymentMethod, setPaymentMethod] = useState("cash")
@@ -61,42 +63,9 @@ const CheckoutPage = () => {
     return true
   }
 
-  // Place order
-  const handlePlaceOrder = () => {
-    const requiredFields = [
-      "fullName",
-      "province",
-      "district",
-      "townCity",
-      "phoneNumber",
-      "emailAddress",
-    ]
-    const missingFields = requiredFields.filter(
-      (field) => !billingDetails[field].trim()
-    )
-
-    if (missingFields.length > 0) {
-      toast.error(`Please fill in: ${missingFields.join(", ")}`)
-      return
-    }
-
-    if (!validateFields()) return
-
-    toast.success("Order placed successfully!")
-
-    setBillingDetails({
-      fullName: "",
-      province: "",
-      district: "",
-      townCity: "",
-      phoneNumber: "",
-      emailAddress: "",
-    })
-  }
-
   const formatPrice = (price) => `Rs ${price.toLocaleString()}`
 
-  // 🔹 Dropdown data
+
   const provinces = locations.provinces
   const districts = billingDetails.province
     ? provinces.find((p) => p.name === billingDetails.province)?.districts || []
@@ -121,6 +90,63 @@ const CheckoutPage = () => {
   useEffect(() => {
     calculateDeliveryCharge()
   }, [billingDetails])
+
+
+  // Place order
+  const handlePlaceOrder = () => {
+    const requiredFields = [
+      "fullName",
+      "province",
+      "district",
+      "townCity",
+      "phoneNumber",
+      "emailAddress",
+    ]
+    const missingFields = requiredFields.filter(
+      (field) => !billingDetails[field].trim()
+    )
+
+    if (missingFields.length > 0) {
+      toast.error(`Please fill in: ${missingFields.join(", ")}`)
+      return
+    }
+
+    if (!validateFields()) return
+
+    cartItems.forEach((item, index) => {
+      addOrder({
+        id: Date.now().toString() + "-" + index, 
+        status: "Pending",            
+        paymentStatus: paymentMethod === "cash" ? "Pending" : "Paid",
+        createdAt: new Date().toLocaleString(),
+        estimatedDelivery: "3–5 business days",
+        fullName: billingDetails.fullName,
+        name: item.name,
+        image: item.image,
+        quantity: item.quantity,
+        amount: (item.price * item.quantity) + deliveryCharge,
+        paymentMethod,
+        province: billingDetails.province,
+        district: billingDetails.district,
+        city: billingDetails.townCity,
+        phoneNumber: billingDetails.phoneNumber,
+      });
+      removeCartItem(item.id);
+    });
+
+    toast.success("Order placed successfully!");
+
+
+
+    setBillingDetails({
+      fullName: "",
+      province: "",
+      district: "",
+      townCity: "",
+      phoneNumber: "",
+      emailAddress: "",
+    })
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">

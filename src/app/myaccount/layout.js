@@ -1,19 +1,17 @@
 "use client";
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
 
+import Link from "next/link";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function AccountLayout({ children }) {
 
   const pathname = usePathname()
   const [email, setEmail] = useState("");
   const linkClass = (path) =>
-    `block w-full text-left px-3 py-2 rounded-md text-sm font-medium transition-colors ${pathname === path
-      ? "text-orange-600 bg-orange-50"
-      : "text-gray-700 hover:text-orange-600 hover:bg-gray-50"
+    `block w-full text-left px-3 py-2 rounded-md text-sm font-medium transition-colors hover:bg-gray-50 ${pathname === path
+      ? "text-red-600 "
+      : "text-gray-700 hover:text-red-600"
     }`;
 
 
@@ -29,7 +27,7 @@ export default function AccountLayout({ children }) {
 
         const response = await fetch("http://127.0.0.1:8000/auth/user/", {
           headers: {
-            Authorization: `Bearer ${token}`, 
+            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
         });
@@ -51,7 +49,7 @@ export default function AccountLayout({ children }) {
     <div className="min-h-screen">
       <div className="bg-white ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-end">
-          <div className="text-sm">
+          <div className="text-sm ">
             Welcome! <span className="text-red-500 font-medium">{email}</span>
           </div>
         </div>
@@ -67,8 +65,8 @@ export default function AccountLayout({ children }) {
             </h2>
 
             <nav className="space-y-4">
-              <Link href="/myaccount/my-profile" className={linkClass("/myaccount/my_profile")}>
-                My Profile
+              <Link href="/myaccount/my-profile" className={linkClass("/myaccount/my-profile")}>
+                My profile
               </Link>
             </nav>
 
@@ -77,8 +75,8 @@ export default function AccountLayout({ children }) {
                 My Orders
               </h3>
               <nav className="space-y-3">
-                <Link href="/myaccount/returns" className={linkClass("/myaccount/returns")}>
-                  My Returns
+                <Link href="/myaccount/order" className={linkClass("/myaccount/order")}>
+                  Orders
                 </Link>
                 <Link href="/myaccount/cancellations" className={linkClass("/myaccount/cancellations")}>
                   My Cancellations

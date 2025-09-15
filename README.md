@@ -6,14 +6,14 @@ An **E-commerce web application** built with **Next.js (frontend)** and **Django
 
 ## Features
 
-### 👤 Customer Module
+### Customer Module
 - Browse products with images, descriptions, and pricing  
 - Add products to cart & manage quantities  
 - Wishlist functionality for saving favorite items  
 - Secure checkout with order creation & payment status  
 - Track order delivery progress  
 
-### 🛠️ Admin Module
+### Admin Module
 - Manage product catalog (CRUD operations)  
 - Handle customer orders and update statuses  
 - View analytics of sales & user activity  
@@ -21,7 +21,7 @@ An **E-commerce web application** built with **Next.js (frontend)** and **Django
 
 ---
 
-## 🏗️ Tech Stack
+## Tech Stack
 
 ### Frontend
 ![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)

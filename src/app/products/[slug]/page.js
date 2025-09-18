@@ -65,7 +65,7 @@ const ProductDetailsPage = () => {
       toast.success("Product added to cart successfully!");
     }
     else toast.info("Already in cart")
-  };
+  };  
   
 
   const handleAddToWishList = () => {

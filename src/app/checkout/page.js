@@ -7,8 +7,10 @@ import EmptyCart from "@/components/EmptyCart"
 import Dropdown from "@/components/Dropdown"
 import { toast } from "react-toastify"
 import useOrderStore from "@/store/orderStore"
+import { useRouter } from 'next/navigation';
 
 const CheckoutPage = () => {
+  const router = useRouter()
   const { cartItems, removeCartItem } = useCart()
   const { addOrder } = useOrderStore()
 
@@ -17,7 +19,6 @@ const CheckoutPage = () => {
     province: "Bagmati",
     district: "Chitwan",
     townCity: "Bharatpur",
-    emailAddress: "suman@gmail.com",
     phoneNumber: "9840631397",
   })
 
@@ -44,17 +45,12 @@ const CheckoutPage = () => {
 
     const fullNameRegex = /^[A-Za-z]+(?:[ .'-][A-Za-z]+)+$/
     const phoneRegex = /^(97|98)\d{8}$/
-    const emailRegex = /^[A-Za-z][^\s@]*@[^\s@]+\.[^\s@]+$/
 
     if (!phoneRegex.test(billingDetails.phoneNumber)) {
       toast.error("Invalid phone number. Use a valid Nepali number.")
       return false
     }
 
-    if (!emailRegex.test(billingDetails.emailAddress)) {
-      toast.error("Invalid email address.")
-      return false
-    }
     if (!fullNameRegex.test(billingDetails.fullName)) {
       toast.error("Invalid name.")
       return false
@@ -100,7 +96,6 @@ const CheckoutPage = () => {
       "district",
       "townCity",
       "phoneNumber",
-      "emailAddress",
     ]
     const missingFields = requiredFields.filter(
       (field) => !billingDetails[field].trim()
@@ -113,27 +108,32 @@ const CheckoutPage = () => {
 
     if (!validateFields()) return
 
-    cartItems.forEach((item, index) => {
-      addOrder({
-        id: Date.now().toString() + "-" + index, 
-        status: "Pending",            
-        paymentStatus: paymentMethod === "cash" ? "Pending" : "Paid",
-        createdAt: new Date().toLocaleString(),
-        estimatedDelivery: "3–5 business days",
-        fullName: billingDetails.fullName,
+    const orderId = Date.now().toString(); // unique order id
+
+    addOrder({
+      id: orderId,
+      status: "Placed",
+      paymentStatus: paymentMethod === "cash" ? "Pending" : "Paid",
+      createdAt: new Date().toLocaleString(),
+      estimatedDelivery: "3–5 business days",
+      fullName: billingDetails.fullName,
+      items: cartItems.map((item) => ({
+        id: item.id,
         name: item.name,
         image: item.image,
         quantity: item.quantity,
-        amount: (item.price * item.quantity) + deliveryCharge,
-        paymentMethod,
-        province: billingDetails.province,
-        district: billingDetails.district,
-        city: billingDetails.townCity,
-        phoneNumber: billingDetails.phoneNumber,
-      });
-      removeCartItem(item.id);
+        price: item.price,
+        amount: item.price * item.quantity,
+      })),
+      subtotal: subtotal + deliveryCharge,
+      paymentMethod,
+      province: billingDetails.province,
+      district: billingDetails.district,
+      city: billingDetails.townCity,
+      phoneNumber: billingDetails.phoneNumber,
     });
 
+    router.push("myaccount/order/")
     toast.success("Order placed successfully!");
 
 
@@ -225,22 +225,6 @@ const CheckoutPage = () => {
                   disabled={!billingDetails.district}
                   onChange={(val) => handleInputChange("townCity", val)}
                 />
-
-                {/* Email Address */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Email Address*
-                  </label>
-                  <input
-                    type="email"
-                    value={billingDetails.emailAddress}
-                    onChange={(e) =>
-                      handleInputChange("emailAddress", e.target.value)
-                    }
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500 bg-gray-50"
-                    required
-                  />
-                </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Phone Number*

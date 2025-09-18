@@ -2,7 +2,25 @@
 import { create } from "zustand";
 
 export const useCart = create((set) => ({
-  cartItems: [],
+  cartItems: [
+    {
+      id: 1,
+      name: "HAVIT HV-G92 Gamepad",
+      price: 1200 - (1200 * 40) / 100, 
+      quantity: 3,
+      image: "/controller3.png",
+      item_left: 15,  
+    },
+    {
+      id: 2,
+      name: "AK-900 Wired Keyboard",
+      price: 2500 - (2500 * 35) / 100,
+      quantity: 3,
+      image: "/keyboard1.png",
+      item_left: 10,
+    },
+  ],
+
   setCartItems: (items) => set({ cartItems: items }),
 
   addCartItem: (item) =>

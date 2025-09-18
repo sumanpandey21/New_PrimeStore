@@ -1,15 +1,30 @@
 "use client"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import useOrderStore from "@/store/orderStore"
 import Image from "next/image"
-import { Eye, X, Check, Package, Truck, CheckCircle } from "lucide-react"
+import { Eye, X, Check, Package, Truck, CheckCircle, Minus, Plus } from "lucide-react"
 
 function OrdersPage() {
-  const { orders, cancelOrder } = useOrderStore()
+  const { orders, cancelOrder, cancelItemQuantity } = useOrderStore()
   const [selectedOrder, setSelectedOrder] = useState(null)
+  const [cancelModal, setCancelModal] = useState(null) // { itemId, itemName, maxQuantity }
+  const [cancelQuantity, setCancelQuantity] = useState(1)
+
   const closeModal = () => setSelectedOrder(null)
- 
+  const closeCancelModal = () => {
+    setCancelModal(null)
+    setCancelQuantity(1)
+  }
+  useEffect(() => {
+    if (selectedOrder) {
+      const updated = orders.find(o => o.id === selectedOrder.id)
+      if (updated) setSelectedOrder(updated)
+    }
+  }, [orders])
+
+
   const status = selectedOrder?.status;
+
   const steps = [
     { id: 1, label: "Placed", icon: Package },
     { id: 2, label: "Approved", icon: Truck },
@@ -17,14 +32,27 @@ function OrdersPage() {
   ];
 
   let currentStep = 0;
-  if (status === "Pending") currentStep = 1;
+  if (status === "Placed") currentStep = 1;
   if (status === "Processed") currentStep = 2;
   if (status === "Delivered") currentStep = 3;
-
 
   const handleCancelOrder = (id) => {
     cancelOrder(id)
     closeModal()
+  }
+
+  const handleItemCancelClick = (itemId, itemName, maxQuantity) => {
+    setCancelModal({ itemId, itemName, maxQuantity })
+    setCancelQuantity(1)
+  }
+
+  const handleConfirmItemCancel = () => {
+    if (cancelModal && selectedOrder) {
+      cancelItemQuantity(selectedOrder.id, cancelModal.itemId, cancelQuantity)
+      const updatedOrder = orders.find(o => o.id === selectedOrder.id)
+      setSelectedOrder(updatedOrder)
+      closeCancelModal()
+    }
   }
 
   return (
@@ -37,9 +65,6 @@ function OrdersPage() {
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-300 text-black text-xs uppercase">
                   <tr>
-                    <th className="px-6 py-3 text-left ">
-                      Product
-                    </th>
                     <th className="px-6 py-3 text-center tracking-wider">
                       Order ID
                     </th>
@@ -63,24 +88,6 @@ function OrdersPage() {
                       key={order.id}
                       className="hover:bg-gray-50 transition-colors duration-150"
                     >
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <div className="flex-shrink-0 h-12 w-12">
-                            <Image
-                              src={order.image}
-                              alt={order.name}
-                              width={48}
-                              height={48}
-                              className="h-12 w-12 rounded-lg object-cover"
-                            />
-                          </div>
-                          <div className="ml-4">
-                            <div className="text-sm font-medium text-gray-900 line-clamp-2">
-                              {order.name}
-                            </div>
-                          </div>
-                        </div>
-                      </td>
                       <td className="px-6 py-4 whitespace-nowrap text-center">
                         <div className="text-sm text-gray-900">#{order.id}</div>
                       </td>
@@ -101,7 +108,7 @@ function OrdersPage() {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-center">
                         <div className="text-sm font-medium text-gray-900">
-                          Rs {order.amount.toLocaleString()}
+                          Rs {order.subtotal.toLocaleString()}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-center">
@@ -126,9 +133,9 @@ function OrdersPage() {
           </div>
         )}
 
-        {/* ====================== MODAL ====================== */}
+        {/* ====================== ORDER DETAILS MODAL ====================== */}
         {selectedOrder && (
-          <div className="fixed inset-0 bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="fixed inset-0  bg-opacity-50 flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-2xl">
               <div className="sticky top-0 bg-white border-b px-6 py-4 flex items-center justify-between rounded-t-xl">
                 <div>
@@ -166,7 +173,7 @@ function OrdersPage() {
                       </div>
                       <div className="flex justify-between border-t pt-2">
                         <span className="text-gray-600">Total Amount:</span>
-                        <span className="font-bold text-lg">Rs {selectedOrder.amount.toLocaleString()}</span>
+                        <span className="font-bold text-lg">Rs {selectedOrder.subtotal.toLocaleString()}</span>
                       </div>
                     </div>
                   </div>
@@ -178,9 +185,8 @@ function OrdersPage() {
                     </h3>
                     <div className="text-sm space-y-1">
                       <p className="font-medium">{selectedOrder.fullName}</p>
-                      <p className="text-gray-600">{selectedOrder.city}, {selectedOrder.district}</p>
-                      <p className="text-gray-600">{selectedOrder.province}</p>
-                      <p className="text-gray-600">{selectedOrder.phoneNumber}</p>
+                      <p className="text-black">{selectedOrder.city}, {selectedOrder.district}, {selectedOrder.province}</p>
+                      <p className="text-black">{selectedOrder.phoneNumber}</p>
                     </div>
                   </div>
                 </div>
@@ -189,27 +195,63 @@ function OrdersPage() {
                 <div className="mb-8">
                   <h3 className="font-semibold text-gray-900 mb-4">Order Items</h3>
                   <div className="bg-white border rounded-lg overflow-hidden">
-                    <div className="grid grid-cols-4 gap-4 bg-gray-50 p-4 text-xs font-medium text-gray-600">
+                    <div className="grid grid-cols-5 gap-4 bg-gray-50 p-4 text-xs font-medium text-gray-600">
                       <span>Product</span>
                       <span className="text-center">Quantity</span>
                       <span className="text-center">Price</span>
                       <span className="text-center">Total</span>
+                      {status === "Pending" && (
+
+                        <span className="text-center">Action</span>
+                      )}
                     </div>
-                    <div className="grid grid-cols-4 gap-4 items-center p-4 border-t">
-                      <div className="flex items-center gap-3">
-                        <Image
-                          src={selectedOrder.image}
-                          alt={selectedOrder.name}
-                          width={48}
-                          height={48}
-                          className="rounded-lg object-cover"
-                        />
-                        <span className="text-sm font-medium line-clamp-2">{selectedOrder.name}</span>
+
+                    {selectedOrder.items.map((item) => (
+                      <div
+                        key={item.id}
+                        className="grid grid-cols-5 gap-4 items-center p-4 border-t"
+                      >
+                        {/* Product */}
+                        <div className="flex items-center gap-3">
+                          <Image
+                            src={item.image}
+                            alt={item.name}
+                            width={48}
+                            height={48}
+                            className="rounded-lg object-cover"
+                          />
+                          <span className="text-sm font-medium line-clamp-2">
+                            {item.name}
+                          </span>
+                        </div>
+
+                        {/* Quantity */}
+                        <span className="text-center font-medium">{item.quantity}</span>
+
+                        {/* Price */}
+                        <span className="text-center">
+                          Rs {item.price.toLocaleString()}
+                        </span>
+
+                        {/* Total */}
+                        <span className="text-center font-bold">
+                          Rs {(item.price * item.quantity).toLocaleString()}
+                        </span>
+
+                        {/* Cancel single product */}
+                        {status === "Placed" && (
+                          <button
+                            onClick={() => handleItemCancelClick(item.id, item.name, item.quantity)}
+                            className="flex items-center justify-center text-red-600 hover:text-red-800 text-sm hover:bg-red-50 rounded p-1 transition-colors cursor-pointer"
+                            title="Cancel Item"
+                          >
+                            <Minus size={16} className="mr-1" />
+                            Cancel
+                          </button>
+                        )}
+
                       </div>
-                      <span className="text-center font-medium">{selectedOrder.quantity}</span>
-                      <span className="text-center">Rs {Math.round(selectedOrder.amount / selectedOrder.quantity).toLocaleString()}</span>
-                      <span className="text-center font-bold">Rs {selectedOrder.amount.toLocaleString()}</span>
-                    </div>
+                    ))}
                   </div>
                 </div>
 
@@ -289,10 +331,105 @@ function OrdersPage() {
                       onClick={() => handleCancelOrder(selectedOrder.id)}
                       className="px-6 py-2 border bg-red-500 hover:bg-red-600 active:bg-red-700 text-white rounded-lg transition-colors duration-150 cursor-pointer"
                     >
-                      Cancel Order
+                      Cancel Entire Order
                     </button>
                   </div>
                 )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ====================== QUANTITY CANCEL MODAL ====================== */}
+        {cancelModal && (
+          <div className="fixed inset-0 bg-opacity-50 flex items-center justify-center z-[60] p-4">
+            <div className="bg-white rounded-lg max-w-md w-full mx-4 shadow-2xl">
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    Cancel Item
+                  </h3>
+                  <button
+                    onClick={closeCancelModal}
+                    className="text-gray-400 hover:text-red-600 cursor-pointer transition-colors"
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
+
+                <div className="mb-6">
+                  <p className="text-sm text-gray-600 mb-4">
+                    How many items of <span className="font-medium text-gray-900">"{cancelModal.itemName}"</span> would you like to cancel?
+                  </p>
+
+                  <div className="space-y-3">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Quantity to Cancel (Max: {cancelModal.maxQuantity})
+                    </label>
+                    <div className="flex items-center space-x-3">
+                      <button
+                        onClick={() => setCancelQuantity(Math.max(1, cancelQuantity - 1))}
+                        disabled={cancelQuantity <= 1}
+                        className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                      >
+                        <Minus size={18} />
+                      </button>
+
+                      <input
+                        type="number"
+                        min="1"
+                        max={cancelModal.maxQuantity}
+                        value={cancelQuantity}
+                        onChange={(e) => {
+                          const value = parseInt(e.target.value) || 1;
+                          setCancelQuantity(Math.min(Math.max(1, value), cancelModal.maxQuantity));
+                        }}
+                        className="w-20 px-3 py-2 border border-gray-300 rounded-lg text-center focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      />
+
+                      <button
+                        onClick={() => setCancelQuantity(Math.min(cancelModal.maxQuantity, cancelQuantity + 1))}
+                        disabled={cancelQuantity >= cancelModal.maxQuantity}
+                        className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                      >
+                        <Plus size={16} className="cursor-pointer" />
+                      </button>
+                    </div>
+
+                    <div className="flex space-x-2 mt-2">
+                      {[...new Set([1, Math.floor(cancelModal.maxQuantity / 2), cancelModal.maxQuantity])]
+                        .filter(qty => qty > 0) // avoid 0 or negatives
+                        .map(qty => (
+                          <button
+                            key={qty}
+                            onClick={() => setCancelQuantity(qty)}
+                            className={`px-3 py-1 text-xs rounded-full border transition-colors cursor-pointer
+                              ${cancelQuantity === qty
+                                ? 'bg-blue-100 border-blue-300 text-blue-700'
+                                : 'bg-gray-50 border-gray-200 text-gray-600 hover:bg-gray-100'
+                              }`}
+                          >
+                            {qty === 1 ? '1' : qty === cancelModal.maxQuantity ? 'All' : `${qty}`}
+                          </button>
+                        ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex space-x-3">
+                  <button
+                    onClick={closeCancelModal}
+                    className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleConfirmItemCancel}
+                    className="flex-1 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors cursor-pointer"
+                  >
+                    Confirm Cancel
+                  </button>
+                </div>
               </div>
             </div>
           </div>

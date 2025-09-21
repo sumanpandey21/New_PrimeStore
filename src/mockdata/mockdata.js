@@ -194,7 +194,7 @@ const categoriesMockData = [
     },
     {
         id: 4,
-        name: "Medicine",
+        name: "Stationery",
         products: [
             {
                 id: 110,

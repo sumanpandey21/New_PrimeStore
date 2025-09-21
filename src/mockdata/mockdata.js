@@ -857,6 +857,36 @@ const productMockData = [
 export { productMockData };
 
 
+export const reviewsMockData = [
+  {
+    productId: 1,
+    averageRating: 4.3,
+    totalReviews: 128,
+    ratingDistribution: { 5: 80, 4: 30, 3: 10, 2: 5, 1: 3 },
+    reviews: [
+      {
+        id: 1,
+        userName: "John Doe",
+        rating: 5,
+        comment: "Excellent product! Great quality and fast delivery.",
+        date: "2025-09-15",
+        orderStatus: "delivered",
+        reviewImages: ["/controller1.png"],
+      },
+      {
+        id: 2,
+        userName: "Alice Smith",
+        rating: 4,
+        comment: "Good product, but packaging could be better.",
+        date: "2025-09-10",
+        orderStatus: "delivered",
+        reviewImages: [],
+      }
+    ]
+  }
+]
+
+
 export const dateMockData = "2025-09-10T18:15:00.000Z";
 
 

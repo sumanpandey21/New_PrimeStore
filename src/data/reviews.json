@@ -1,0 +1,52 @@
+{
+  "productId": 1,
+  "averageRating": 4.3,
+  "totalReviews": 128,
+  "ratingDistribution": {
+    "5": 80,
+    "4": 30,
+    "3": 10,
+    "2": 5,
+    "1": 3
+  },
+  "reviews": [
+    {
+      "id": 1,
+      "userName": "John Doe",
+      "rating": 5,
+      "comment": "Excellent product! Great quality and fast delivery.",
+      "date": "2025-09-15",
+      "likes": 12,
+      "isVerified": true,
+      "reviewImages": [
+        "/images/reviews/review1a.jpg",
+        "/images/reviews/review1b.jpg"
+      ],
+      "sellerReply": "Thank you so much for your feedback, John! We’re glad you liked it."
+    },
+    {
+      "id": 2,
+      "userName": "Alice Smith",
+      "rating": 4,
+      "comment": "Good product, but packaging could be better.",
+      "date": "2025-09-10",
+      "likes": 4,
+      "isVerified": false,
+      "reviewImages": [],
+      "sellerReply": null
+    },
+    {
+      "id": 3,
+      "userName": "Raj Kumar",
+      "rating": 3,
+      "comment": "Average. Not bad but not as expected.",
+      "date": "2025-09-05",
+      "likes": 2,
+      "isVerified": true,
+      "reviewImages": [
+        "/images/reviews/review3a.jpg"
+      ],
+      "sellerReply": "Sorry to hear that, Raj. We’ll try to improve next time."
+    }
+  ]
+}

@@ -6,6 +6,7 @@ import { productMockData, categoriesMockData } from "@/mockdata/mockdata";
 import { toast } from "react-toastify"
 import { useCart } from "@/store/cartStore";
 import { useWishlist } from '@/store/wishlistStore';
+import ReviewSection from '@/components/ReviewSection';
 
 const ProductDetailsPage = () => {
 
@@ -190,6 +191,7 @@ const ProductDetailsPage = () => {
           </div>
         </div>
       </div>
+        <ReviewSection productId={product.id} />
     </div>
   );
 };
